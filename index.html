@@ -1807,5 +1807,14 @@ function typingInField(t){ return t&&(t.tagName==="INPUT"||t.tagName==="TEXTAREA
 })();
 })();
 </script>
+<!-- Site admin: open the site with ?admin (or #admin) to sign in and edit. Visitors never load admin.js. -->
+<script>
+(function(){
+  function want(){ var on=/[?&]admin(=|&|$)/.test(location.search)||location.hash==="#admin"; try{ on=on||sessionStorage.getItem("rc-admin")==="1" }catch(e){} return on }
+  function load(){ if(window.__rcAdminLoading) return; window.__rcAdminLoading=true; var s=document.createElement("script"); s.src="admin.js?v=1"; document.body.appendChild(s) }
+  if(want()) load();
+  window.addEventListener("hashchange",function(){ if(location.hash==="#admin") load() });
+})();
+</script>
 </body>
 </html>
